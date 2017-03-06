@@ -1,0 +1,24 @@
+version: '2'
+services:
+  db:
+    image: mysql
+    restart: always
+    environment:
+       MYSQL_ROOT_PASSWORD: demo
+       MYSQL_DATABASE: demo
+       MYSQL_USER: demo
+       MYSQL_PASSWORD: demo
+    # ports:
+    #   - "8082:8082"
+
+  user_service:
+    depends_on:
+       - db
+    ports:
+      - "5001:5001"
+    image: micheliac/demo-user
+    volumes:
+      - /Users/fengcaixiao/Documents/my_project/logging_demo_service/rails5-server-user:/src
+    command: rails s -p 5001 -b 0.0.0.0
+    stdin_open: true
+    tty: true
